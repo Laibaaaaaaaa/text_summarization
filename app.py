@@ -61,25 +61,12 @@ if "user_input" not in st.session_state:
 # User input text area
 user_input = st.text_area("Enter the text you want to summarize", st.session_state.user_input, height=200)
 
-col1, col2 = st.columns([1, 3])
-
-# Column 1: Add a 'Clear' button
-with col1:
-    clear_button = st.button("Clear", key="clear")
-
-# Column 2: Summarize button and output
-with col2:
-    if st.button("Summarize"):
-        if user_input:
-            with st.spinner('Summarizing...'):
-                summary = summarize(user_input)
-                st.subheader("Summary:")
-                st.write(summary)
-        else:
-            st.write("Please enter text to summarize.")
-
-    # Clear the user input when the "Clear" button is clicked
-    if clear_button:
-        st.session_state.user_input = ""  # Reset the input text
-        st.experimental_rerun()  # Re-run the app to reflect the change
-
+# Summarize button and output
+if st.button("Summarize"):
+    if user_input:
+        with st.spinner('Summarizing...'):
+            summary = summarize(user_input)
+            st.subheader("Summary:")
+            st.write(summary)
+    else:
+        st.write("Please enter text to summarize.")

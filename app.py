@@ -54,7 +54,12 @@ st.markdown("""
     Enter some text and let the tool do the rest!
 """)
 
-user_input = st.text_area("Enter the text you want to summarize", "", height=200)
+# Use session state to manage text input
+if "user_input" not in st.session_state:
+    st.session_state.user_input = ""
+
+# User input text area
+user_input = st.text_area("Enter the text you want to summarize", st.session_state.user_input, height=200)
 
 col1, col2 = st.columns([1, 3])
 
@@ -73,6 +78,8 @@ with col2:
         else:
             st.write("Please enter text to summarize.")
 
+    # Clear the user input when the "Clear" button is clicked
     if clear_button:
-        st.experimental_rerun()  # Clear input on button click
+        st.session_state.user_input = ""  # Reset the input text
+        st.experimental_rerun()  # Re-run the app to reflect the change
 
